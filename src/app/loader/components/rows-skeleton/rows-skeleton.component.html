@@ -1,0 +1,17 @@
+<div *ngIf="!isResponsive; else responsive" class="skeleton-row-container">
+  <div *ngFor="let width of config"
+       class="cell-container"
+       [ngStyle]="{'width.px': width}">
+    <div class="skeleton-cell"></div>
+  </div>
+</div>
+
+<ng-template #responsive>
+  <div class="skeleton-row-container">
+    <div *ngFor="let width of config"
+         class="cell-container"
+         [ngStyle]="{'width.%': width}">
+      <div class="skeleton-cell"></div>
+    </div>
+  </div>
+</ng-template>

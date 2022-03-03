@@ -1,0 +1,5 @@
+<div class="cell-container"
+     [ngStyle]="{'width.px': width, 'flex-grow': type === 'grow' ? growValue : 0}"
+     [ngClass]="{'no-paddings': !paddings}">
+  <ng-content></ng-content>
+</div>

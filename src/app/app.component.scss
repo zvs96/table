@@ -1,0 +1,9 @@
+.patients-table__header, .patients-table__row {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-grow: 1;
+}
+
+.sex-label {
+  text-transform: capitalize;
+}

@@ -1,0 +1,16 @@
+<div class="header-row-container" [ngClass]="{selected: isSelected, 'selection-mode': selectionMode}">
+  <div class="selection-toggler">
+    <label class="custom-checkbox__container" (click)="$event.preventDefault(); select()">
+      <input class="custom-checkbox__input" type="checkbox" [checked]="isSelected" (change)="$event ? select() : null">
+      <div class="custom-checkbox">
+        <!--        <app-icon class="custom-checkbox__icon"-->
+        <!--                  [width]="10"-->
+        <!--                  [height]="10"-->
+        <!--                  [name]="ICON_CHECK"-->
+        <!--                  color="inherit">-->
+        <!--        </app-icon>-->
+      </div>
+    </label>
+  </div>
+  <ng-content></ng-content>
+</div>

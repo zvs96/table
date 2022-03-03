@@ -1,0 +1,113 @@
+<div *ngIf="isVirtual; else defaultTable" class="table">
+  <app-virtual-viewport class="table-body custom-scroll"
+                        [itemSize]="50"
+                        minBufferPx="200"
+                        maxBufferPx="200"
+                        (scrolledIndexChange)="onVirtualScroll()"
+                        (scroll)="onSimpleScroll($event)">
+    <ng-container out-of-scroll>
+      <app-table-header-row class="sticky-row"
+                            [selectionMode]="isSelectionMode"
+                            [isSelected]="isAllSelected"
+                            (allSelected)="selectAll($event)">
+        <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
+      </app-table-header-row>
+
+      <app-table-row *ngIf="staticTableRow" class="sticky-row">
+        <ng-container *ngTemplateOutlet="staticTableRow"></ng-container>
+      </app-table-row>
+    </ng-container>
+    <app-table-row *cdkVirtualFor="let item of dataList; let i = index; trackBy: trackByFn.bind(this)"
+                   [selectionMode]="isSelectionMode"
+                   [isSelected]="!!selectedItems[item[entityKey]]"
+                   [selectionDisabled]="disabledSelectionItems.includes(item[entityKey])"
+                   (selected)="toggleSelect(item)">
+      <ng-container *ngTemplateOutlet="tableBody; context: { $implicit: item, index: i }"></ng-container>
+    </app-table-row>
+
+    <ng-container *ngIf="isLoading">
+      <app-rows-skeleton *ngFor="let row of loadersArray"
+                         [config]="loadersConfig.rowsConfig"
+                         [isResponsive]="loadersConfig.responsive">
+      </app-rows-skeleton>
+    </ng-container>
+  </app-virtual-viewport>
+
+  <ng-container *ngIf="!dataList.length && !isLoading">
+    <div class="no-entries">
+      <span class="no-entries-text">{{ customMessage || "No entries found" }}</span>
+    </div>
+  </ng-container>
+</div>
+
+<ng-template #defaultTable>
+  <div class="table">
+    <div #tableContainer
+         infiniteScroll
+         cdkDropList
+         class="table-body custom-scroll"
+         [infiniteScrollDistance]="scrollOffset"
+         [infiniteScrollDisabled]="isLoading"
+         [infiniteScrollThrottle]="50"
+         [scrollWindow]="false"
+         [cdkDropListDisabled]="!draggable || isLoading"
+         (cdkDropListDropped)="onDrop($event)"
+         (scrolled)="onInfinityScroll()"
+         (scroll)="onSimpleScroll($event)">
+      <app-table-header-row [selectionMode]="isSelectionMode"
+                            [isSelected]="isAllSelected"
+                            [ngClass]="{ 'draggable-header-row': draggable && !isLoading}"
+                            (allSelected)="selectAll($event)">
+        <ng-container *ngTemplateOutlet="tableHeader"></ng-container>
+      </app-table-header-row>
+
+      <app-table-row *ngIf="staticTableRow">
+        <ng-container *ngTemplateOutlet="staticTableRow"></ng-container>
+      </app-table-row>
+
+      <ng-container *ngFor="let item of dataList; let i = index; trackBy: trackByFn.bind(this)">
+        <app-table-row *ngIf="!item.length; else combinedRow"
+                       cdkDragBoundary=".table-body"
+                       cdkDrag
+                       cdkDragLockAxis="y"
+                       [ngClass]="{ 'draggable-row': draggable && !isLoading }"
+                       [selectionMode]="isSelectionMode"
+                       [isSelected]="!!selectedItems[item[entityKey]]"
+                       (selected)="toggleSelect(item)">
+          <ng-container *ngTemplateOutlet="tableBody; context: { $implicit: item, index: i }"></ng-container>
+          <app-drag-placeholder *cdkDragPlaceholder></app-drag-placeholder>
+        </app-table-row>
+
+        <ng-template #combinedRow>
+          <div class="combined-row"
+               cdkDragBoundary=".table-body"
+               cdkDrag
+               cdkDragLockAxis="y"
+               [ngClass]="{ 'draggable-row': draggable && !isLoading }">
+            <app-table-row *ngFor="let subItem of item; let i = index; trackBy: trackByFn.bind(this)"
+                           [selectionMode]="isSelectionMode"
+                           [isSelected]="!!selectedItems[subItem[entityKey]]"
+                           (selected)="toggleSelect(subItem)">
+              <ng-container *ngTemplateOutlet="tableBody; context: { $implicit: subItem, index: i }"></ng-container>
+            </app-table-row>
+            <app-drag-placeholder *cdkDragPlaceholder></app-drag-placeholder>
+          </div>
+        </ng-template>
+      </ng-container>
+
+
+      <ng-container *ngIf="isLoading">
+        <app-rows-skeleton *ngFor="let row of loadersArray"
+                           [config]="loadersConfig.rowsConfig"
+                           [isResponsive]="loadersConfig.responsive">
+        </app-rows-skeleton>
+      </ng-container>
+    </div>
+
+    <ng-container *ngIf="!dataList.length && !isLoading && !disableEmptyMessage">
+      <div class="no-entries">
+        <span class="no-entries-text">{{ customMessage || "No entries found"}}</span>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>

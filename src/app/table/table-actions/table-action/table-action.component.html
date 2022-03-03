@@ -1,0 +1,27 @@
+<button class="table-action"
+        [ngClass]="{disabled: isLoading || disabled}"
+        (click)="onClick()"
+        [matTooltip]="tooltipText"
+        [matTooltipDisabled]="!tooltipText || !(isLoading || disabled)"
+        matTooltipPosition="above"
+        matTooltipShowDelay="300"
+        matTooltipClass="text-tooltip">
+    <span class="table-action__icon">
+      table-action
+      <!--      <app-icon *ngIf="icon"-->
+      <!--                width="24"-->
+      <!--                height="24"-->
+      <!--                color="inherit"-->
+      <!--                [name]="icon"-->
+      <!--                [ngClass]="{'inverted-icon': invertedIcon}">-->
+      <!--      </app-icon>-->
+    </span>
+  <span class="table-action__title">
+      <ng-container *ngIf="!isLoading; else loader">
+        <ng-content></ng-content>
+      </ng-container>
+      <ng-template #loader>
+        <app-loader setColor="#096BEF"></app-loader>
+      </ng-template>
+    </span>
+</button>

@@ -1,0 +1,23 @@
+.cell-container {
+  height: 100%;
+  flex-shrink: 0;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+
+  &.no-paddings {
+    padding: 0;
+  }
+}
+
+:host {
+  display: block;
+
+  &.grow {
+    display: flex;
+    flex-grow: 1;
+    .cell-container {
+      flex-grow: 1;
+    }
+  }
+}

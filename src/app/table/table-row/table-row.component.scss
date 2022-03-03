@@ -1,0 +1,54 @@
+.row-container {
+  display: inline-flex;
+  min-width: 100%;
+  height: 50px;
+  position: relative;
+  border-radius: 6px;
+
+  &.selection-mode {
+    .selection-toggler {
+      display: flex;
+      align-self: center;
+    }
+  }
+
+  .selection-toggler.selection-disabled {
+    width: 20px;
+    background-color: #303235;
+    display: flex;
+    border-radius: 6px 0 0 6px;
+    cursor: default;
+
+    .custom-checkbox__container {
+      display: none;
+    }
+  }
+
+  &::ng-deep {
+    &:hover {
+      .actions-trigger {
+        background-color: #37393D;
+      }
+    }
+  }
+}
+
+.selection-toggler {
+  display: none;
+
+  width: 20px;
+  height: 100%;
+
+  cursor: pointer;
+
+  padding-left: 8px;
+  align-items: center;
+}
+
+.drag-handle {
+  display: none;
+  height: 100%;
+  width: 10px;
+  padding-left: 4px;
+  align-items: center;
+}

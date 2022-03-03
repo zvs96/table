@@ -1,0 +1,19 @@
+<div class="row-container"
+     [ngClass]="{selected: isSelected, 'selection-mode': selectionMode && !selectionDisabled}"
+     (click)="toggleSelection()">
+  <app-drag-handle class="drag-handle" tooltip="Row reordering" cdkDragHandle></app-drag-handle>
+  <div class="selection-toggler" [ngClass]="{'selection-disabled': selectionMode && selectionDisabled}">
+    <label class="custom-checkbox__container" (click)="$event.preventDefault()">
+      <input class="custom-checkbox__input" type="checkbox" [checked]="isSelected">
+      <div class="custom-checkbox">
+        <!--                <sc-icon class="custom-checkbox__icon"-->
+        <!--                          [width]="10"-->
+        <!--                          [height]="10"-->
+        <!--                          [name]="ICON_CHECK"-->
+        <!--                          color="inherit">-->
+        <!--                </sc-icon>-->
+      </div>
+    </label>
+  </div>
+  <ng-content></ng-content>
+</div>

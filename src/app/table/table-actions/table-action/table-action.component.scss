@@ -1,0 +1,46 @@
+.table-action {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  min-width: 100%;
+  height: 32px;
+  transition: background-color 0.3s ease-out;
+  cursor: pointer;
+  padding-right: 5px;
+
+  &:hover {
+    background-color: #303235;
+    overflow: hidden;
+
+    .table-action__icon app-icon {
+      fill: #C9C9C9;
+    }
+  }
+
+  &.disabled {
+    pointer-events: all!important;
+  }
+}
+
+.table-action__icon {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-left: 5px;
+  margin-right: 7px;
+
+  app-icon {
+    fill: #979797;
+  }
+}
+
+.inverted-icon {
+  transform: rotateY(180deg);
+}
+
+.table-action__title {
+  font-size: 13px;
+  line-height: 16px;
+  font-family: "Montserrat";
+  color: #C9C9C9;
+}

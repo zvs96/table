@@ -1,0 +1,81 @@
+.cell-container {
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 5px;
+  cursor: pointer;
+
+  &.no-paddings {
+    padding: 0;
+  }
+
+  &.no-sorting {
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+:host {
+  display: block;
+  height: 100%;
+
+  &.grow {
+    display: flex;
+    flex-grow: 1;
+    .cell-container {
+      flex-grow: 1;
+    }
+  }
+}
+
+.cell-label {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 0 5px;
+  border-radius: 6px;
+  height: 20px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: background-color 0.3s ease-out;
+
+  .cell-container:hover & {
+    background-color: #EAEAEA;
+  }
+
+  &.sorting-up .sorting-icon app-icon {
+    fill: #096BEF;
+  }
+
+  &.sorting-down .sorting-icon app-icon {
+    fill: #096BEF;
+    transform: rotate(180deg);
+  }
+
+  &.sorting-down, &.sorting-up {
+    .cell-title {
+      color: #096BEF;
+    }
+  }
+}
+
+.cell-title {
+  font-size: 12px;
+  line-height: 14px;
+  font-family: "Montserrat";
+  color: #979797;
+  transition: color .3s ease-out;
+}
+
+.sorting-icon {
+  margin-left: 2px;
+
+  app-icon {
+    fill: #979797;
+    transition: transform .3s ease-out;
+  }
+}

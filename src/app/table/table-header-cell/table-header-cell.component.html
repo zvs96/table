@@ -1,0 +1,18 @@
+<div class="cell-container"
+     [ngStyle]="{'width.px': width}"
+     [ngClass]="{'no-paddings': !paddings,
+                 'no-sorting': !sortKey && !resizeKey}">
+  <div class="cell-label"
+       [ngClass]="{'sorting-up': currentDirection === 'asc',
+                   'sorting-down': currentDirection === 'desc'}"
+       (click)="onClick()">
+    <span class="cell-title">
+      <ng-content></ng-content>
+    </span>
+    <div *ngIf="sortKey"
+         class="sorting-icon">
+      <!--      <app-icon width="10" height="10" [name]="SORTING_ICON" [color]="'inherit'"></app-icon>-->
+    </div>
+  </div>
+  <div *ngIf="resizeKey" class="resizable-column-v2"></div>
+</div>

@@ -1,0 +1,26 @@
+.drag-handle-icon {
+  cursor: move;
+  fill: #979797;
+
+  &:hover {
+    fill: #C9C9C9;
+  }
+}
+
+:host {
+  .handler & {
+    visibility: hidden;
+  }
+
+  .handler:hover &, app-draggable-block:hover & {
+    visibility: visible;
+  }
+
+  .cdk-drag-preview & {
+    visibility: visible;
+
+    & .drag-handle-icon {
+      fill: #096BEF;
+    }
+  }
+}
